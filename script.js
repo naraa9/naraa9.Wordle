@@ -1,11 +1,21 @@
 let intentos = 6;
 const CANTLETRAS = 5;
 const BUTTON = document.getElementById("guess-button");
-let diccionario = ["COMER","DANTE","COLOR","OSITO","COMPU","ARBOL","BICHO","PERRO"];
-const PALABRA= diccionario[Math.floor(Math.random()*diccionario.length)];
-BUTTON.addEventListener("click", intentar);
 
+
+BUTTON.addEventListener("click", intentar);
+const UrlApi= "https://random-word-api.herokuapp.com/word?lang=es&&length=5";
+
+fetch(UrlApi).then(Response=>Response.json())
+    .then(Response=>{
+        PALABRA=Response[0].toUpperCase();
+    })
+.catch(err=>{
+    let diccionario = ["COMER","CORRE","ROMPE","CARRO","DANTE","COLOR","OSITO","COMPU","ARBOL","BICHO","PERRO"];
+    const PALABRA= diccionario[Math.floor(Math.random()*diccionario.length)].toUpperCase();
+})
 function intentar(){
+    console.log(UrlApi);
     const INTENTO= leerIntento();
     if(INTENTO==PALABRA){
         terminar("<h2>Felicidades ganaste!😄​👏</h2>​");
